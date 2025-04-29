@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Edit Post</h1>
+<form method="POST" action="{{ url_for('edit_post', post_id=post.id) }}">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ post.title }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="author" name="author" value="{{ post.author }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="content" class="form-label">Content</label>
+        <div id="editor" style="min-height: 200px;">{{ post.content | safe }}</div>
+        <input type="hidden" id="content" name="content">
+    </div>
+    <button type="submit" class="btn btn-primary">Update Post</button>
+    <a href="{{ url_for('post_detail', post_id=post.id) }}" class="btn btn-outline-secondary">Cancel</a>
+</form>
+{% endblock %}
+{% block scripts %}
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                ['link', 'image'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'header': [1, 2, 3, false] }],
+                ['clean']
+            ]
+        }
+    });
+    var form = document.querySelector('form');
+    form.onsubmit = function() {
+        var content = document.querySelector('input[name=content]');
+        content.value = quill.root.innerHTML;
+    };
+</script>
+{% endblock %}
