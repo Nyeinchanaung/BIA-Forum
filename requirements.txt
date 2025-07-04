@@ -8,5 +8,5 @@ Jinja2==3.1.6
 MarkupSafe==3.0.2
 setuptools==80.0.0
 SQLAlchemy==2.0.40
-typing_extensions==4.13.2
+typing_extensions==4.14.1
 Werkzeug==3.1.3
